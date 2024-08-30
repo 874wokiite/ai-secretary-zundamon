@@ -1,9 +1,8 @@
 {
   "name": "ai-secretary-zundamon",
-  "displayName": "Ai secretary zundamon",
+  "displayName": "AI Secretary Zundamon",
   "version": "0.0.1",
-  "description": "hoge",
-  "author": "umeuni",
+  "description": "AI helper by Secretary Zundamon",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
@@ -21,6 +20,7 @@
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
+    "autoprefixer": "^10.4.20",
     "postcss": "8.4.33",
     "prettier": "3.2.4",
     "typescript": "5.3.3"
