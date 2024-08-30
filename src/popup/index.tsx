@@ -1,6 +1,6 @@
 import IconImage from "data-base64:@/assets/icon.png"
 
-import "@/style.css"
+import "@/styles/global.css"
 
 function IndexPopup() {
   return (
