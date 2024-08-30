@@ -1,9 +1,5 @@
+import ZundaImage from "data-base64:@/assets/zundamon-1.png"
 import cssText from "data-text:@/style.css"
-import type { PlasmoCSConfig } from "plasmo"
-
-export const config: PlasmoCSConfig = {
-  matches: ["https://www.plasmo.com/*"]
-}
 
 export const getStyle = () => {
   const style = document.createElement("style")
@@ -13,8 +9,8 @@ export const getStyle = () => {
 
 const PlasmoOverlay = () => {
   return (
-    <div className="z-50 flex fixed top-32 right-8">
-      <p>HELLO!!</p>
+    <div className="z-50 flex fixed bottom-[-1024px] right-[-240px]">
+      <img src={ZundaImage} alt="ずんだもんの画像" />
     </div>
   )
 }
