@@ -1,4 +1,12 @@
 import { ZundamonImage } from "@/components/ZundamonImage";
+import cssText from "data-text:@/styles/global.css";
+
+export const getStyle = () => {
+  const style = document.createElement("style");
+  style.textContent = cssText;
+
+  return style;
+};
 
 function ContentUI() {
   return (

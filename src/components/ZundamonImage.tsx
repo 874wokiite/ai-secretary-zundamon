@@ -12,16 +12,18 @@ export const getStyle = () => {
 };
 
 export const ZundamonImage = () => {
-  const [imageSrc, setImageSrc] = useState(ZundamonNormalImage);
   var sound = new Audio(
     chrome.runtime.getURL("assets/sounds/zundamon-greet.wav"),
   );
+
+  const [imageSrc, setImageSrc] = useState(ZundamonNormalImage);
 
   useEffect(() => {
     if (imageSrc === ZundamonClickedImage) {
       const timer = setTimeout(() => {
         setImageSrc(ZundamonNormalImage);
       }, 2000);
+
       return () => clearTimeout(timer);
     }
   }, [imageSrc]);
