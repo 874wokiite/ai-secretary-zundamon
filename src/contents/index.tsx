@@ -1,7 +1,7 @@
 import { RemainderPanel } from "@/components/RemainderPanel";
 import { SettingPanel } from "@/components/SettingPanel";
-import type { ActionType } from "@/types/ActionType";
-import type { EventType } from "@/types/EventType";
+import type { EventDictType, EventType } from "@/types/EventType";
+import type { StatusType } from "@/types/StatusType";
 import { Storage } from "@plasmohq/storage";
 import cssText from "data-text:@/styles/global.css";
 import { useEffect, useState } from "react";
@@ -20,14 +20,12 @@ const ContentScriptsUI = () => {
   const [isPanelVisible, setIsPanelVisible] = useState(false);
 
   useEffect(() => {
-    const handleMessage = async (message: {
-      action: ActionType;
-      alarmName?: string;
-    }) => {
+    chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
       switch (message.action) {
         case "ALARM_FIRED":
-          const event: EventType = await storage.get(message.alarmName);
-          setEvent(event);
+          (storage.get("events") as Promise<EventDictType>).then((events) =>
+            setEvent(events[message.alarmName]),
+          );
 
           break;
         case "EXTENSION_CLICKED":
@@ -35,19 +33,20 @@ const ContentScriptsUI = () => {
 
           break;
       }
-      return true;
-    };
-    chrome.runtime.onMessage.addListener(handleMessage);
+      sendResponse({ status: "SUCCESS" as StatusType });
 
-    return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
-    };
+      return true;
+    });
   }, []);
 
   useEffect(() => {
     if (event) {
-      let timerId = setTimeout(() => {
-        storage.remove(event.eventId);
+      let timerId = setTimeout(async () => {
+        const events: EventDictType = await storage.get("events");
+
+        delete events[event.eventId];
+        await storage.set("events", events);
+
         setEvent(undefined);
       }, 5000);
 

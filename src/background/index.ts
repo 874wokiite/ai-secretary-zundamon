@@ -5,7 +5,7 @@ chrome.action.onClicked.addListener((tab) => {
   const action: ActionType = "EXTENSION_CLICKED";
 
   if (tab.id) {
-    void chrome.tabs.sendMessage(tab.id, { action: action }, () => {});
+    chrome.tabs.sendMessage(tab.id, { action: action });
   }
 });
 
@@ -13,14 +13,11 @@ chrome.action.onClicked.addListener((tab) => {
 chrome.alarms.onAlarm.addListener((alarm) => {
   const action: ActionType = "ALARM_FIRED";
 
+  // TODO: ユーザがChromeを開いてない状態でイベントが発火した時の処理も必要??
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    void chrome.tabs.sendMessage(
-      tabs[0].id,
-      {
-        action: action,
-        alarmName: alarm.name,
-      },
-      () => {},
-    );
+    chrome.tabs.sendMessage(tabs[0].id, {
+      action: action,
+      alarmName: alarm.name,
+    });
   });
 });
