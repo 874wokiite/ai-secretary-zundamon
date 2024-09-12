@@ -1,1 +1,1 @@
-export type ActionType = "EXTENSION_CLICKED";
+export type ActionType = "ALARM_FIRED" | "EXTENSION_CLICKED";
