@@ -1,47 +1,39 @@
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import ZundamonClickedImage from "data-base64:@/assets/images/zundamon-clicked.png";
-import ZundamonNormalImage from "data-base64:@/assets/images/zundamon-normal.png";
-import cssText from "data-text:@/styles/global.css";
-import { useEffect, useState } from "react";
+import * as AspectRatio from "@radix-ui/react-aspect-ratio";
+import ZundamonGreetImage from "data-base64:@/assets/images/zundamon/greet.png";
+import ZundamonOrderImage from "data-base64:@/assets/images/zundamon/order.png";
+import ZundamonThinkImage from "data-base64:@/assets/images/zundamon/think.png";
+import { useMemo } from "react";
+import { twMerge } from "tailwind-merge";
 
-export const getStyle = () => {
-  const style = document.createElement("style");
-  style.textContent = cssText;
+export type ZundamonVariantType = "greet" | "order" | "think";
 
-  return style;
-};
-
-export const ZundamonImage = () => {
-  var sound = new Audio(
-    chrome.runtime.getURL("assets/sounds/zundamon-greet.wav"),
-  );
-
-  const [imageSrc, setImageSrc] = useState(ZundamonNormalImage);
-
-  useEffect(() => {
-    if (imageSrc === ZundamonClickedImage) {
-      const timer = setTimeout(() => {
-        setImageSrc(ZundamonNormalImage);
-      }, 2000);
-
-      return () => clearTimeout(timer);
+export const ZundamonImage = ({
+  variant,
+  className,
+}: {
+  variant: ZundamonVariantType;
+  className?: string;
+}) => {
+  const imageSrc = useMemo(() => {
+    switch (variant) {
+      case "greet":
+        return ZundamonGreetImage;
+      case "order":
+        return ZundamonOrderImage;
+      case "think":
+        return ZundamonThinkImage;
     }
-  }, [imageSrc]);
-
-  const clickEventHandler = () => {
-    setImageSrc(ZundamonClickedImage);
-    sound.play();
-  };
+  }, [variant]);
 
   return (
-    <div className="w-[360px] hover:cursor-pointer" onClick={clickEventHandler}>
-      <AspectRatio ratio={2 / 3}>
+    <div className={twMerge("h-[600px] w-[400px]", className)}>
+      <AspectRatio.Root ratio={2 / 3}>
         <img
           className="object-cover select-none pointer-events-none"
           src={imageSrc}
           alt="ずんだもんの画像"
         />
-      </AspectRatio>
+      </AspectRatio.Root>
     </div>
   );
 };
