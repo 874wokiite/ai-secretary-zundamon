@@ -1,10 +1,11 @@
-import type { EventDictType, EventType } from "@/types/EventType";
-import type { StatusType } from "@/types/StatusType";
 import type { PlasmoMessaging } from "@plasmohq/messaging";
-import { Storage } from "@plasmohq/storage";
+import { Storage as ChromeStorage } from "@plasmohq/storage";
+
+import type { EventDictType } from "@/types/EventType";
+import type { StatusType } from "@/types/StatusType";
 
 const handler: PlasmoMessaging.MessageHandler = async (_, response) => {
-  const storage = new Storage();
+  const storage = new ChromeStorage();
 
   const eventId = crypto.randomUUID() as string;
   const alarmName = eventId;

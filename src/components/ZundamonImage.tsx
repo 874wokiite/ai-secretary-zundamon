@@ -29,7 +29,7 @@ export const ZundamonImage = ({
     <div className={twMerge("h-[600px] w-[400px]", className)}>
       <AspectRatio.Root ratio={2 / 3}>
         <img
-          className="object-cover select-none pointer-events-none"
+          className="pointer-events-none select-none object-cover"
           src={imageSrc}
           alt="ずんだもんの画像"
         />
