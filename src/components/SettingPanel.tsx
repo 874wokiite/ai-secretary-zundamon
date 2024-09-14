@@ -1,36 +1,30 @@
-import { sendToBackground } from "@plasmohq/messaging";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import { useState } from "react";
 
-import { Button } from "@/components/Button";
 import { IconButton } from "@/components/IconButton";
-import { ZundamonImage } from "@/components/ZundamonImage";
+import { CheckEventsScreen } from "@/components/SettingPanelScreens/CheckEventsScreen";
+import { TitleScreen } from "@/components/SettingPanelScreens/TitleScreen";
+import type { ScreenType } from "@/types/ScreenType";
 
 export const SettingPanel = ({ onClose }: { onClose: () => void }) => {
-  const handleSetAlarms = () => {
-    void sendToBackground({
-      name: "setAlarms",
-    });
+  const [screen, setScreen] = useState<ScreenType>("TITLE");
+
+  const renderScreen = () => {
+    switch (screen) {
+      case "TITLE":
+        return <TitleScreen screen={screen} setScreen={setScreen} />;
+      case "CHECK_EVENTS":
+        return <CheckEventsScreen screen={screen} setScreen={setScreen} />;
+    }
   };
 
   return (
-    <div className="flex h-[540px] w-[960px] items-center justify-center rounded-xl bg-white p-8 shadow-xl">
-      <div className="relative grid h-full w-full grid-cols-2">
-        <div className="flex items-center justify-center">
-          <div className="flex flex-col items-center justify-center gap-4">
-            <h1 className="text-[32px]">AI Secretary Zundamon</h1>
-            <Button onClick={handleSetAlarms}>業務を開始する!!</Button>
-          </div>
-        </div>
-        <div className="relative overflow-hidden">
-          <div className="absolute -bottom-[160px]">
-            <ZundamonImage variant="greet" />
-          </div>
-        </div>
-        <div className="absolute right-0 top-0">
-          <IconButton onClick={onClose}>
-            <Cross1Icon className="h-6 w-6" />
-          </IconButton>
-        </div>
+    <div className="relative flex h-[540px] w-[960px] items-center justify-center rounded-xl bg-white p-8 shadow-xl">
+      {renderScreen()}
+      <div className="absolute right-4 top-4">
+        <IconButton onClick={onClose}>
+          <Cross1Icon className="h-6 w-6" />
+        </IconButton>
       </div>
     </div>
   );

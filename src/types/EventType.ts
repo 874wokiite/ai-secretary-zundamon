@@ -1,6 +1,8 @@
 export type EventType = {
-  eventId: string;
-  eventName: string;
+  id: string;
+  name: string;
+  start: Date;
+  end: Date;
 };
 
 export type EventDictType = {

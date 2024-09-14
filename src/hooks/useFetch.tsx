@@ -2,26 +2,26 @@ import { useEffect, useState } from "react";
 
 type FetchState<T> = {
   data: T | undefined;
-  loading: boolean;
+  isLoading: boolean;
   error: any | undefined;
 };
 
 export const useFetch = <T,>(asyncFn: () => Promise<T>) => {
   const [state, setState] = useState<FetchState<T>>({
     data: undefined,
-    loading: false,
+    isLoading: undefined,
     error: undefined,
   });
 
   useEffect(() => {
-    void (async () => {
-      setState({ data: undefined, loading: true, error: undefined });
+    (async () => {
+      setState({ data: undefined, isLoading: true, error: undefined });
 
       try {
         const result = await asyncFn();
-        setState({ data: result, loading: false, error: undefined });
+        setState({ data: result, isLoading: false, error: undefined });
       } catch (error: any) {
-        setState({ data: undefined, loading: false, error: error });
+        setState({ data: undefined, isLoading: false, error: error });
       }
     })();
   }, [asyncFn]);
