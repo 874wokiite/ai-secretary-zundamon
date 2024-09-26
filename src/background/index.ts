@@ -13,7 +13,6 @@ chrome.action.onClicked.addListener((tab) => {
 chrome.alarms.onAlarm.addListener((alarm) => {
   const action: ActionType = "ALARM_FIRED";
 
-  // TODO: ユーザがChromeを開いてない状態でイベントが発火した時の処理も必要??
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, {
       action: action,

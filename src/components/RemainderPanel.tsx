@@ -6,7 +6,7 @@ export const RemainderPanel = ({ event }: { event: EventType }) => {
     <div className="relative flex flex-row justify-start">
       <div className="absolute top-[100px] z-30 flex h-fit w-[240px] items-center justify-center rounded-xl border border-black bg-white px-4 py-2">
         <p className="text-base text-black">
-          {event.eventName}がもうすぐ始まるのだ!!
+          {event.name}がもうすぐ始まるのだ!!
         </p>
       </div>
       <ZundamonImage variant="order" className="ml-[160px]" />

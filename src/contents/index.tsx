@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { RemainderPanel } from "@/components/RemainderPanel";
 import { SettingPanel } from "@/components/SettingPanel";
 import type { EventDictType, EventType } from "@/types/EventType";
-import type { StatusType } from "@/types/StatusType";
 
 export const getStyle = () => {
   const style = document.createElement("style");
@@ -34,7 +33,7 @@ const ContentScriptsUI = () => {
 
           break;
       }
-      sendResponse({ status: "SUCCESS" as StatusType });
+      sendResponse();
 
       return true;
     });
@@ -42,12 +41,7 @@ const ContentScriptsUI = () => {
 
   useEffect(() => {
     if (event) {
-      let timerId = setTimeout(async () => {
-        const events: EventDictType = await storage.get("events");
-
-        delete events[event.eventId];
-        await storage.set("events", events);
-
+      let timerId = setTimeout(() => {
         setEvent(undefined);
       }, 5000);
 

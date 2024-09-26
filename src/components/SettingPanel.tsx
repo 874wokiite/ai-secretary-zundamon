@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { IconButton } from "@/components/IconButton";
 import { CheckEventsScreen } from "@/components/SettingPanelScreens/CheckEventsScreen";
+import { CompletionNoticeSrceen } from "@/components/SettingPanelScreens/CompletionNoticeScreen ";
 import { TitleScreen } from "@/components/SettingPanelScreens/TitleScreen";
 import type { ScreenType } from "@/types/ScreenType";
 
@@ -15,6 +16,8 @@ export const SettingPanel = ({ onClose }: { onClose: () => void }) => {
         return <TitleScreen screen={screen} setScreen={setScreen} />;
       case "CHECK_EVENTS":
         return <CheckEventsScreen screen={screen} setScreen={setScreen} />;
+      case "COMPLETION_NOTICE":
+        return <CompletionNoticeSrceen onClose={onClose} />;
     }
   };
 

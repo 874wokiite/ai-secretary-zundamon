@@ -6,5 +6,5 @@ export type EventType = {
 };
 
 export type EventDictType = {
-  [eventId: string]: EventType;
+  [id: string]: EventType;
 };
