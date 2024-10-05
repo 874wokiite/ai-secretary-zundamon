@@ -1,15 +1,19 @@
 import type { ActionType } from "@/types/ActionType";
+import type { ZundaMessage } from "@/types/ZundaMessage";
 
-// NOTE: 拡張機能のボタンがクリックされた時の処理
+// Chrome拡張機能のボタンがクリックされた時の処理
 chrome.action.onClicked.addListener((tab) => {
-  const action: ActionType = "EXTENSION_CLICKED";
-
   if (tab.id) {
-    chrome.tabs.sendMessage(tab.id, { action: action });
+    const message: ZundaMessage = {
+      action: "OPEN",
+    };
+
+    // アクティブなタブにメッセージを送信する
+    chrome.tabs.sendMessage(tab.id, message);
   }
 });
 
-// NOTE: イベントのアラームを受け取った時の処理
+// Chromeのアラームが発火した時の処理
 chrome.alarms.onAlarm.addListener((alarm) => {
   const action: ActionType = "ALARM_FIRED";
 
