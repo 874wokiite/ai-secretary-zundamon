@@ -11,6 +11,8 @@ import { useGetSchedules } from "@/features/Setting/hooks/useGetSchedules";
 import type { Step } from "@/features/Setting/types/Step";
 import type { Schedule } from "@/types/Schedule";
 
+import { useGetMessage } from "../hooks/useGetMessage";
+
 const ScheduleRow = ({ schedule }: { schedule: Schedule }) => {
   return (
     <div className="flex w-[360px] flex-row items-center gap-[12px]">
@@ -30,7 +32,8 @@ type Step2Props = {
 };
 
 export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
-  const { data: schedules, isLoading } = useGetSchedules();
+  const { schedules } = useGetSchedules();
+  const { message, isLoading } = useGetMessage(schedules);
 
   return (
     <div className="flex h-full w-full flex-row justify-between p-[24px]">
@@ -68,9 +71,7 @@ export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
       <div className="relative h-full w-[340px]">
         <div className="absolute -bottom-[184px]">
           <Message>
-            {isLoading
-              ? "今日の予定を取得してくるのだ..."
-              : "今日の予定はコレなのだ!!"}
+            {isLoading ? "今日の予定を取得してくるのだ..." : message}
           </Message>
           <ZundamonImage
             variant={isLoading ? "think" : "order"}

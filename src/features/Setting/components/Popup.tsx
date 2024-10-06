@@ -9,7 +9,6 @@ import type { Schedule } from "@/types/Schedule";
 import type { ZundaMessage } from "@/types/ZundaMessage";
 
 const CloseButton = ({ onClick }: { onClick: () => void }) => {
-  // NOTE: アイコンの見た目の差から、FigmaとはPaddingとアイコンのサイズが異なっている
   return (
     <div
       className="cursor-pointer rounded-[4px] bg-zunda-white p-[4px]"

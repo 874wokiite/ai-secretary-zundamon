@@ -1,7 +1,7 @@
 import cssText from "data-text:@/styles/global.css";
 
-import { Popup } from "@/features/Setting/components/Popup";
 import { Toast } from "@/features/Remainder/components/Toast";
+import { Popup } from "@/features/Setting/components/Popup";
 
 export const getStyle = () => {
   const style = document.createElement("style");

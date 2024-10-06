@@ -4,6 +4,7 @@ import { differenceInMinutes } from "date-fns";
 
 import type { Schedule, ScheduleMap } from "@/types/Schedule";
 
+// スケジュールを受け取って、Chromeのアラームを設定するハンドラ
 const handler: PlasmoMessaging.MessageHandler<Schedule[], void> = async (
   messageRequest,
   messageResponse,
@@ -19,7 +20,7 @@ const handler: PlasmoMessaging.MessageHandler<Schedule[], void> = async (
     const alarmName = schedule.id;
 
     // 実際の予定が始まる3分前に通知するよう差分から引いておく
-    const timeDifference = differenceInMinutes(schedule.start, new Date());
+    const timeDifference = differenceInMinutes(schedule.start, new Date()) - 3;
 
     // 通知対象となるスケジュールに対して、Chromeのアラームを設定する
     if (timeDifference > 0) {

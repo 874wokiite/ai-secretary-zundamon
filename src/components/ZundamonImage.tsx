@@ -4,7 +4,7 @@ import ZundamonOrderImage from "data-base64:@/assets/images/zundamon/order.png";
 import ZundamonThinkImage from "data-base64:@/assets/images/zundamon/think.png";
 import React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/shadcn";
 
 export type ZundamonImageVariant = "greet" | "order" | "think";
 

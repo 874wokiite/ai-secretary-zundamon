@@ -1,17 +1,42 @@
 import { sendToBackground } from "@plasmohq/messaging";
-import { useCallback } from "react";
+import { useEffect, useState } from "react";
 
-import { useFetch } from "@/hooks/useFetch";
 import type { Schedule } from "@/types/Schedule";
 
-export const useGetSchedules = () => {
-  const asyncFn = useCallback(
-    async () =>
-      await sendToBackground<void, Schedule[]>({
-        name: "getSchedules",
-      }),
-    [],
-  );
+type GetSchedulesState = {
+  schedules: Schedule[] | undefined;
+  isLoading: boolean;
+  error: any | undefined;
+};
 
-  return useFetch<Schedule[]>(asyncFn);
+export const useGetSchedules = () => {
+  const [state, setState] = useState<GetSchedulesState>({
+    schedules: undefined,
+    isLoading: true,
+    error: undefined,
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const schedules = await sendToBackground<void, Schedule[]>({
+          name: "getSchedules",
+        });
+
+        setState({
+          schedules: schedules,
+          isLoading: false,
+          error: undefined,
+        });
+      } catch (error: any) {
+        setState({
+          schedules: undefined,
+          isLoading: false,
+          error: error,
+        });
+      }
+    })();
+  }, []);
+
+  return state;
 };
