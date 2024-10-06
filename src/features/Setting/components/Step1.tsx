@@ -14,7 +14,7 @@ type Step1Props = {
 export const Step1 = ({ setStep }: Step1Props) => {
   return (
     <div className="flex h-full w-full flex-row justify-between p-[24px]">
-      <div className="flex w-[392px] flex-col items-center justify-center gap-[40px]">
+      <div className="flex h-full w-[392px] flex-col items-center justify-center gap-[40px]">
         <img
           className="pointer-events-none w-[320px] select-none object-cover"
           src={LogoImage}
@@ -24,9 +24,9 @@ export const Step1 = ({ setStep }: Step1Props) => {
           <MdLightMode className="size-[18px]" /> おはよう！
         </Button>
       </div>
-      <div className="h-full">
-        <div className="flex flex-col">
-          <Message className="mt-[120px]">おっはよ〜〜んなのだ！！！</Message>
+      <div className="relative h-full w-[340px]">
+        <div className="absolute -bottom-[184px]">
+          <Message>おっはよ〜〜んなのだ！！！</Message>
           <ZundamonImage variant="greet" className="w-[340px]" />
         </div>
       </div>

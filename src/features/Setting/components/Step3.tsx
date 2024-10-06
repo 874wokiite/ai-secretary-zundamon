@@ -23,9 +23,9 @@ export const Step3 = ({ schedules, setIsVisible }: Step3Props) => {
           今日もよろしくね！ずんだもん！
         </Button>
       </div>
-      <div className="h-full">
-        <div className="flex flex-col">
-          <Message className="mt-[120px]">
+      <div className="relative h-full w-[340px]">
+        <div className="absolute -bottom-[184px]">
+          <Message>
             {isLoading
               ? "リマインダーをセットするのだ..."
               : "リマインダーのセットが完了したのだ!!"}

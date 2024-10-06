@@ -43,8 +43,10 @@ export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
                 <MdAutorenew className="size-[14px]" /> 再取得
               </Button>
             </div>
-            <Button variant="text" size="small">
-              カレンダー編集 <MdEditCalendar className="size-[14px]" />
+            <Button variant="text" size="small" asChild>
+              <a href="https://calendar.google.com/calendar" target="_blank">
+                カレンダー編集 <MdEditCalendar className="size-[14px]" />
+              </a>
             </Button>
           </div>
           <div className="flex h-full w-full flex-col items-center gap-[24px] p-[16px]">
@@ -63,9 +65,9 @@ export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
           <MdWork className="size-[18px]" /> 業務開始！
         </Button>
       </div>
-      <div className="h-full">
-        <div className="flex flex-col">
-          <Message className="mt-[120px]">
+      <div className="relative h-full w-[340px]">
+        <div className="absolute -bottom-[184px]">
+          <Message>
             {isLoading
               ? "今日の予定を取得してくるのだ..."
               : "今日の予定はコレなのだ!!"}
