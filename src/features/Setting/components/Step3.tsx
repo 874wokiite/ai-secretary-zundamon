@@ -1,6 +1,9 @@
 import React from "react";
+import { MdOutlineWavingHand } from "react-icons/md";
 
 import { Button } from "@/components/Button";
+import { Message } from "@/components/Message";
+import { ZundamonImage } from "@/components/ZundamonImage";
 import { useSetAlarms } from "@/features/Setting/hooks/useSetAlarms";
 import type { Schedule } from "@/types/Schedule";
 
@@ -13,14 +16,22 @@ export const Step3 = ({ schedules, setIsVisible }: Step3Props) => {
   const { isLoading } = useSetAlarms(schedules);
 
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <div className="flex flex-col items-center justify-center gap-4">
-        <h1 className="text-zunda-t2">
-          {isLoading
-            ? "リマインダーをセットしています..."
-            : "リマインダーのセットが完了しました!!"}
-        </h1>
-        <Button onClick={() => setIsVisible(false)}>閉じる</Button>
+    <div className="flex h-full w-full flex-row justify-between p-[24px]">
+      <div className="flex w-[392px] flex-col items-center justify-center gap-[40px]">
+        <Button onClick={() => setIsVisible(false)}>
+          <MdOutlineWavingHand className="size-[18px]" />{" "}
+          今日もよろしくね！ずんだもん！
+        </Button>
+      </div>
+      <div className="h-full">
+        <div className="flex flex-col">
+          <Message className="mt-[120px]">
+            {isLoading
+              ? "リマインダーをセットするのだ..."
+              : "リマインダーのセットが完了したのだ!!"}
+          </Message>
+          <ZundamonImage variant="greet" className="w-[340px]" />
+        </div>
       </div>
     </div>
   );

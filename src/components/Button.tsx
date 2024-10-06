@@ -10,10 +10,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-zunda-primary-light text-zunda-black text-zunda-body border-zunda-black",
+          "bg-zunda-primary text-zunda-black text-zunda-body border-zunda-black",
         secondary:
           "bg-zunda-white text-zunda-black text-zunda-caption border-zunda-black",
-        text: "text-zunda-primary-dark text-zunda-caption border-none",
+        text: "text-zunda-primary text-zunda-caption border-none",
       },
       size: {
         default: "text-zunda-body px-[16px] py-[8px] gap-[8px] border-[2px]",

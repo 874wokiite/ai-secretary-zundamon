@@ -5,11 +5,9 @@ module.exports = {
     extend: {
       colors: {
         zunda: {
-          primary: {
-            light: "#6FF1DA",
-            dark: "#4BBBA7",
-            pale: "#F5FFFD",
-          },
+          primary: "#07CAA8",
+          secondary: "#AF83E8",
+          "secondary-pale": "#F6F0FF",
           black: "#000000",
           white: "#FFFFFF",
           gray: "#868686",
