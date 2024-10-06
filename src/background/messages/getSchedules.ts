@@ -1,12 +1,14 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging";
 import { endOfDay, parseISO, startOfDay } from "date-fns";
 
-import type { EventType } from "@/types/EventType";
+import type { Schedule } from "@/types/Schedule";
 
-const handler: PlasmoMessaging.MessageHandler<void, EventType[]> = async (
+// Google Calenderのスケジュールを取得するハンドラ
+const handler: PlasmoMessaging.MessageHandler<void, Schedule[]> = async (
   _,
   messageResponse,
 ) => {
+  // Google APIにアクセスするためのトークンを取得する
   const token = await new Promise<string>((resolve) => {
     chrome.identity.getAuthToken({ interactive: true }, (token) => {
       resolve(token);
@@ -26,6 +28,7 @@ const handler: PlasmoMessaging.MessageHandler<void, EventType[]> = async (
     orderBy: "startTime",
   });
 
+  // Google Calenderから今日のスケジュールを取得
   const response = await fetch(`${baseUrl}?${params.toString()}`, {
     method: "GET",
     headers: {
@@ -34,6 +37,7 @@ const handler: PlasmoMessaging.MessageHandler<void, EventType[]> = async (
     },
   });
 
+  // FIXME: エラーが発生した時の対応を考える必要がある
   if (!response.ok) {
     throw new Error("Failed to fetch Google Calendar events");
   }
@@ -41,13 +45,15 @@ const handler: PlasmoMessaging.MessageHandler<void, EventType[]> = async (
   const data = await response.json();
   const items: any[] = data.items;
 
-  const events: EventType[] = items.map((item) => ({
+  // AIずんだもんで使用するスケジュールの型に変換
+  const events: Schedule[] = items.map((item) => ({
     id: item.id,
     name: item.summary,
     start: parseISO(item.start.dateTime),
     end: parseISO(item.end.dateTime),
   }));
 
+  // BSWから別の世界にレスポンスを返す
   messageResponse.send(events);
 };
 

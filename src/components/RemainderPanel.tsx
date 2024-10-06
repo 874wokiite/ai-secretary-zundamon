@@ -1,5 +1,5 @@
 import { ZundamonImage } from "@/components/ZundamonImage";
-import type { EventType } from "@/types/EventType";
+import type { EventType } from "@/types/Schedule";
 
 export const RemainderPanel = ({ event }: { event: EventType }) => {
   return (

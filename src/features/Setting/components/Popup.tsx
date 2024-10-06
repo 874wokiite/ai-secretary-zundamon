@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 
 import { Step1 } from "@/features/Setting/components/Step1";
+import { Step2 } from "@/features/Setting/components/Step2";
 import type { Step } from "@/features/Setting/types/StepProps";
 import type { ZundaMessage } from "@/types/ZundaMessage";
 
@@ -9,7 +10,7 @@ const CloseButton = ({ onClick }: { onClick: () => void }) => {
   // NOTE: アイコンの見た目の差から、FigmaとはPaddingとアイコンのサイズが異なっている
   return (
     <div
-      className="cursor-pointer rounded-[4px] bg-zunda-white p-[4px] hover:bg-zunda-white/90"
+      className="cursor-pointer rounded-[4px] bg-zunda-white p-[4px]"
       onClick={onClick}
     >
       <MdClose className="size-[22px]" />
@@ -26,6 +27,8 @@ export const Popup = () => {
     switch (step) {
       case 1:
         return <Step1 setStep={setStep} />;
+      case 2:
+        return <Step2 setStep={setStep} />;
     }
   };
 

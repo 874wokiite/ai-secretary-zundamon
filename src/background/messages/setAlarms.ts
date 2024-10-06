@@ -2,7 +2,7 @@ import type { PlasmoMessaging } from "@plasmohq/messaging";
 import { Storage as ChromeStorage } from "@plasmohq/storage";
 import { differenceInMinutes } from "date-fns";
 
-import type { EventDictType, EventType } from "@/types/EventType";
+import type { EventDictType, EventType } from "@/types/Schedule";
 
 const handler: PlasmoMessaging.MessageHandler<void, void> = async (
   _,

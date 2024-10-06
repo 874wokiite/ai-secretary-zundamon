@@ -2,35 +2,34 @@ import * as AspectRatio from "@radix-ui/react-aspect-ratio";
 import ZundamonGreetImage from "data-base64:@/assets/images/zundamon/greet.png";
 import ZundamonOrderImage from "data-base64:@/assets/images/zundamon/order.png";
 import ZundamonThinkImage from "data-base64:@/assets/images/zundamon/think.png";
-import { useMemo } from "react";
-import { twMerge } from "tailwind-merge";
+import React from "react";
 
-export type ZundamonVariantType = "greet" | "order" | "think";
+import { cn } from "@/lib/utils";
+
+export type ZundamonImageVariant = "greet" | "order" | "think";
+
+export interface ZundamonImageProps {
+  variant: ZundamonImageVariant;
+  className?: string;
+}
+
+const imageMap: Record<ZundamonImageVariant, string> = {
+  greet: ZundamonGreetImage,
+  order: ZundamonOrderImage,
+  think: ZundamonThinkImage,
+};
 
 export const ZundamonImage = ({
   variant,
   className,
-}: {
-  variant: ZundamonVariantType;
-  className?: string;
-}) => {
-  const imageSrc = useMemo(() => {
-    switch (variant) {
-      case "greet":
-        return ZundamonGreetImage;
-      case "order":
-        return ZundamonOrderImage;
-      case "think":
-        return ZundamonThinkImage;
-    }
-  }, [variant]);
-
+  ...props
+}: ZundamonImageProps) => {
   return (
-    <div className={twMerge("h-[600px] w-[400px]", className)}>
-      <AspectRatio.Root ratio={2 / 3}>
+    <div className={cn("", className)} {...props}>
+      <AspectRatio.Root ratio={541 / 825}>
         <img
           className="pointer-events-none select-none object-cover"
-          src={imageSrc}
+          src={imageMap[variant]}
           alt="ずんだもんの画像"
         />
       </AspectRatio.Root>

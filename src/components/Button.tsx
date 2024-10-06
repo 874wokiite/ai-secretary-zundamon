@@ -5,17 +5,19 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "flex flex-row justify-center items-center rounded-[4px] font-bold",
+  "flex flex-row w-fit justify-center items-center rounded-[4px] font-bold",
   {
     variants: {
       variant: {
-        primary: "bg-zunda-primary-light text-zunda-black border-zunda-black",
-        secondary: "bg-zunda-white text-zunda-black border-zunda-black",
-        text: "bg-zunda-white text-zunda-primary-dark border-none",
+        primary:
+          "bg-zunda-primary-light text-zunda-black text-zunda-body border-zunda-black",
+        secondary:
+          "bg-zunda-white text-zunda-black text-zunda-caption border-zunda-black",
+        text: "text-zunda-primary-dark text-zunda-caption border-none",
       },
       size: {
         default: "text-zunda-body px-[16px] py-[8px] gap-[8px] border-[2px]",
-        small: "text-zunda-caption px-[8px] py-[6px] gap-[4px] border-[1px]",
+        small: "text-zunda-caption px-[8px] py-[4px] gap-[4px] border-[1px]",
       },
     },
     defaultVariants: {

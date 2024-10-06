@@ -2,7 +2,7 @@ import { Storage as ChromeStorage } from "@plasmohq/storage";
 
 import { Button } from "@/components/Button";
 import { ZundamonImage } from "@/components/ZundamonImage";
-import { useGetEvents } from "@/hooks/useGetEvents";
+import { useGetEvents } from "@/features/Setting/hooks/useGetSchedules";
 import type { ScreenProps } from "@/types/ScreenType";
 
 export const CheckEventsScreen = ({ setScreen }: ScreenProps) => {
