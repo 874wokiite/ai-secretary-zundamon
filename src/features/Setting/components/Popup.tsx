@@ -3,7 +3,9 @@ import { MdClose } from "react-icons/md";
 
 import { Step1 } from "@/features/Setting/components/Step1";
 import { Step2 } from "@/features/Setting/components/Step2";
-import type { Step } from "@/features/Setting/types/StepProps";
+import { Step3 } from "@/features/Setting/components/Step3";
+import type { Step } from "@/features/Setting/types/Step";
+import type { Schedule } from "@/types/Schedule";
 import type { ZundaMessage } from "@/types/ZundaMessage";
 
 const CloseButton = ({ onClick }: { onClick: () => void }) => {
@@ -21,6 +23,7 @@ const CloseButton = ({ onClick }: { onClick: () => void }) => {
 export const Popup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [step, setStep] = useState<Step>(1);
+  const [schedules, setSchedules] = useState<Schedule[]>([]);
 
   // 現在のステップに対応する画面を描画するための関数
   const renderCurrentStep = () => {
@@ -28,15 +31,18 @@ export const Popup = () => {
       case 1:
         return <Step1 setStep={setStep} />;
       case 2:
-        return <Step2 setStep={setStep} />;
+        return <Step2 setStep={setStep} setSchedules={setSchedules} />;
+      case 3:
+        return <Step3 schedules={schedules} setIsVisible={setIsVisible} />;
     }
   };
 
   useEffect(() => {
-    // BSWから"OPEN"アクションを受け取った時にポップアップを表示する
+    // BSWから"OPEN"アクションを受け取った時に、最初のステップに戻した状態でポップアップを表示する
     chrome.runtime.onMessage.addListener(
       (message: ZundaMessage, _, sendResponse) => {
         if (message.action === "OPEN") {
+          setStep(1);
           setIsVisible(true);
         }
         sendResponse();

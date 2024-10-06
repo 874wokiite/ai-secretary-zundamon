@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import React from "react";
 import { MdAutorenew } from "react-icons/md";
 import { MdWork } from "react-icons/md";
 import { MdEditCalendar } from "react-icons/md";
@@ -7,7 +8,7 @@ import { Button } from "@/components/Button";
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
 import { useGetSchedules } from "@/features/Setting/hooks/useGetSchedules";
-import type { StepProps } from "@/features/Setting/types/StepProps";
+import type { Step } from "@/features/Setting/types/Step";
 import type { Schedule } from "@/types/Schedule";
 
 const ScheduleRow = ({ schedule }: { schedule: Schedule }) => {
@@ -23,7 +24,12 @@ const ScheduleRow = ({ schedule }: { schedule: Schedule }) => {
   );
 };
 
-export const Step2 = ({ setStep }: StepProps) => {
+type Step2Props = {
+  setStep: React.Dispatch<React.SetStateAction<Step>>;
+  setSchedules: React.Dispatch<React.SetStateAction<Schedule[]>>;
+};
+
+export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
   const { data: schedules, isLoading } = useGetSchedules();
 
   return (
@@ -48,7 +54,12 @@ export const Step2 = ({ setStep }: StepProps) => {
               ))}
           </div>
         </div>
-        <Button onClick={() => setStep(3)}>
+        <Button
+          onClick={() => {
+            setSchedules(schedules);
+            setStep(3);
+          }}
+        >
           <MdWork className="size-[18px]" /> 業務開始!!
         </Button>
       </div>

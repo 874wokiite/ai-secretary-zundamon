@@ -1,7 +1,13 @@
-import { Button } from "@/components/Button";
-import type { StepProps } from "@/features/Setting/types/StepProps";
+import React from "react";
 
-export const Step1 = ({ setStep }: StepProps) => {
+import { Button } from "@/components/Button";
+import type { Step } from "@/features/Setting/types/Step";
+
+type Step1Props = {
+  setStep: React.Dispatch<React.SetStateAction<Step>>;
+};
+
+export const Step1 = ({ setStep }: Step1Props) => {
   return (
     <div className="flex h-full w-full items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-4">
