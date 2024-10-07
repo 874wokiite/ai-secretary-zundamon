@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useEffect } from "react";
 import { MdAutorenew } from "react-icons/md";
 import { MdWork } from "react-icons/md";
 import { MdEditCalendar } from "react-icons/md";
@@ -9,6 +9,7 @@ import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
 import { useGetSchedules } from "@/features/Setting/hooks/useGetSchedules";
 import type { Step } from "@/features/Setting/types/Step";
+import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Schedule } from "@/types/Schedule";
 
 import { useGetMessage } from "../hooks/useGetMessage";
@@ -34,12 +35,17 @@ type Step2Props = {
 export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
   const { schedules } = useGetSchedules();
   const { message, isLoading } = useGetMessage(schedules);
+  const { play: playCheck } = useZundamonSound("check");
+
+  useEffect(() => {
+    playCheck();
+  }, []);
 
   return (
     <div className="flex h-full w-full flex-row justify-between p-[24px]">
       <div className="flex flex-col items-center gap-[40px]">
         <div className="flex h-[360px] w-[392px] flex-col border border-zunda-black">
-          <div className="bg-zunda-secondary-pale flex h-[48px] items-center justify-between border-b border-zunda-black pl-[16px]">
+          <div className="flex h-[48px] items-center justify-between border-b border-zunda-black bg-zunda-secondary-pale pl-[16px]">
             <div className="flex flex-row items-center gap-[12px]">
               <h2 className="text-zunda-body font-bold">今日の予定</h2>
               <Button variant="secondary" size="small">

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdOutlineWavingHand } from "react-icons/md";
 
 import { Button } from "@/components/Button";
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
 import { useSetAlarms } from "@/features/Setting/hooks/useSetAlarms";
+import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Schedule } from "@/types/Schedule";
 
 type Step3Props = {
@@ -14,6 +15,13 @@ type Step3Props = {
 
 export const Step3 = ({ schedules, setIsVisible }: Step3Props) => {
   const { isLoading } = useSetAlarms(schedules);
+  const { play: playCheer } = useZundamonSound("cheer");
+
+  useEffect(() => {
+    if (!isLoading) {
+      playCheer();
+    }
+  }, [isLoading]);
 
   return (
     <div className="flex h-full w-full flex-row justify-between p-[24px]">

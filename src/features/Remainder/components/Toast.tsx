@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
+import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Schedule, ScheduleMap } from "@/types/Schedule";
 import type { ZundaMessage } from "@/types/ZundaMessage";
 
 export const Toast = () => {
   const [schedule, setSchedule] = useState<Schedule | Schedule>(undefined);
+  const { play: playNotify } = useZundamonSound("notify");
 
   useEffect(() => {
     // BSWから"REMIND"アクションを受け取った時に、Chromeストレージからスケジュールを取得する
@@ -26,6 +28,10 @@ export const Toast = () => {
 
   useEffect(() => {
     if (schedule) {
+      // 通知が来たとき用のずんだもんの音声を再生する
+      playNotify();
+
+      // 通知されてから5秒後に消えるようにタイマーをセット
       let timerId = setTimeout(() => {
         setSchedule(undefined);
       }, 5000);
