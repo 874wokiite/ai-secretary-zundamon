@@ -6,7 +6,7 @@ import { Step2 } from "@/features/Setting/components/Step2";
 import { Step3 } from "@/features/Setting/components/Step3";
 import type { Step } from "@/features/Setting/types/Step";
 import type { Schedule } from "@/types/Schedule";
-import type { ZundaMessage } from "@/types/ZundaMessage";
+import type { ZundamonMessage } from "@/types/ZundamonMessage";
 
 const CloseButton = ({ onClick }: { onClick: () => void }) => {
   return (
@@ -39,7 +39,7 @@ export const Popup = () => {
   useEffect(() => {
     // BSWから"OPEN"アクションを受け取った時に、最初のステップに戻した状態でポップアップを表示する
     chrome.runtime.onMessage.addListener(
-      (message: ZundaMessage, _, sendResponse) => {
+      (message: ZundamonMessage, _, sendResponse) => {
         if (message.action === "OPEN") {
           setStep(1);
           setIsVisible(true);
@@ -52,7 +52,7 @@ export const Popup = () => {
   return (
     isVisible && (
       <div className="flex h-[600px] w-[800px] flex-col overflow-hidden rounded-[8px] border-[2px] border-zunda-black bg-zunda-white drop-shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
-        <div className="bg-zunda-secondary flex w-full flex-row items-center justify-end border-b-[2px] border-b-zunda-black p-[8px]">
+        <div className="flex w-full flex-row items-center justify-end border-b-[2px] border-b-zunda-black bg-zunda-secondary p-[8px]">
           <CloseButton onClick={() => setIsVisible(false)} />
         </div>
         <div className="h-full w-full">{renderCurrentStep()}</div>

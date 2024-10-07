@@ -10,7 +10,7 @@ const handler: PlasmoMessaging.MessageHandler<Schedule[], void> = async (
   messageResponse,
 ) => {
   // リクエストからスケジュールを取り出す
-  const schedules = messageRequest.body;
+  const schedules = messageRequest.body ?? [];
 
   // 以前に登録されたChromeのアラームを削除する
   chrome.alarms.clearAll();

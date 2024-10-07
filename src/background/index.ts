@@ -1,9 +1,9 @@
-import type { ZundaMessage } from "@/types/ZundaMessage";
+import type { ZundamonMessage } from "@/types/ZundamonMessage";
 
 // Chrome拡張機能のボタンがクリックされた時の処理
 chrome.action.onClicked.addListener((tab) => {
   if (tab.id) {
-    const message: ZundaMessage = {
+    const message: ZundamonMessage = {
       action: "OPEN",
     };
 
@@ -14,7 +14,7 @@ chrome.action.onClicked.addListener((tab) => {
 
 // Chromeのアラームが発火した時の処理
 chrome.alarms.onAlarm.addListener((alarm) => {
-  const message: ZundaMessage = {
+  const message: ZundamonMessage = {
     action: "REMIND",
     id: alarm.name,
   };

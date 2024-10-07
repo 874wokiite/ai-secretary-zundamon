@@ -5,21 +5,23 @@ import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Schedule, ScheduleMap } from "@/types/Schedule";
-import type { ZundaMessage } from "@/types/ZundaMessage";
+import type { ZundamonMessage } from "@/types/ZundamonMessage";
 
 export const Toast = () => {
-  const [schedule, setSchedule] = useState<Schedule | Schedule>(undefined);
+  const [schedule, setSchedule] = useState<Schedule | undefined>(undefined);
   const { play: playNotify } = useZundamonSound("notify");
 
   useEffect(() => {
     // BSWから"REMIND"アクションを受け取った時に、Chromeストレージからスケジュールを取得する
     chrome.runtime.onMessage.addListener(
-      (message: ZundaMessage, _, sendResponse) => {
-        if (message.action === "REMIND" && message.id) {
+      (message: ZundamonMessage, _, sendResponse) => {
+        if (message.action === "REMIND") {
           const storage = new ChromeStorage();
-          void storage
-            .get<ScheduleMap>("scheduleMap")
-            .then((scheduleMap) => setSchedule(scheduleMap[message.id]));
+          void storage.get<ScheduleMap>("scheduleMap").then((scheduleMap) => {
+            if (scheduleMap && message.id) {
+              setSchedule(scheduleMap[message.id]);
+            }
+          });
         }
         sendResponse();
       },

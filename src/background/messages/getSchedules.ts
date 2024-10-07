@@ -11,6 +11,9 @@ const handler: PlasmoMessaging.MessageHandler<void, Schedule[]> = async (
   // Google APIにアクセスするためのトークンを取得する
   const token = await new Promise<string>((resolve) => {
     chrome.identity.getAuthToken({ interactive: true }, (token) => {
+      if (!token) {
+        throw new Error("Failed to fetch Google Auth Token.");
+      }
       resolve(token);
     });
   });
@@ -37,7 +40,6 @@ const handler: PlasmoMessaging.MessageHandler<void, Schedule[]> = async (
     },
   });
 
-  // FIXME: エラーが発生した時の対応を考える必要がある
   if (!response.ok) {
     throw new Error("Failed to fetch Google Calendar events");
   }

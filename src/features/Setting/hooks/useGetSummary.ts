@@ -2,16 +2,17 @@ import { sendToBackground } from "@plasmohq/messaging";
 import { useEffect, useState } from "react";
 
 import type { Schedule } from "@/types/Schedule";
+import type { Summary } from "@/types/Summary";
 
-type GetMessageState = {
-  message: string | undefined;
+type GetSummaryState = {
+  summary: Summary | undefined;
   isLoading: boolean;
   error: any | undefined;
 };
 
-export const useGetMessage = (schedules: Schedule[] | undefined) => {
-  const [state, setState] = useState<GetMessageState>({
-    message: undefined,
+export const useGetSummary = (schedules: Schedule[] | undefined) => {
+  const [state, setState] = useState<GetSummaryState>({
+    summary: undefined,
     isLoading: true,
     error: undefined,
   });
@@ -19,26 +20,26 @@ export const useGetMessage = (schedules: Schedule[] | undefined) => {
   const fetch = async () => {
     try {
       setState({
-        message: undefined,
+        summary: undefined,
         isLoading: true,
         error: undefined,
       });
 
       if (schedules) {
-        const message = await sendToBackground<Schedule[], string>({
-          name: "getMessage",
+        const summary = await sendToBackground<Schedule[], Summary>({
+          name: "getSummary",
           body: schedules,
         });
 
         setState({
-          message: message,
+          summary: summary,
           isLoading: false,
           error: undefined,
         });
       }
     } catch (error: any) {
       setState({
-        message: undefined,
+        summary: undefined,
         isLoading: false,
         error: error,
       });

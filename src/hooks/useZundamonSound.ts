@@ -17,7 +17,9 @@ export const useZundamonSound = (variant: ZundamonSoundVariant) => {
   }, [variant]);
 
   const play = useCallback(() => {
-    void soundRef.current.play();
+    if (soundRef.current) {
+      void soundRef.current.play();
+    }
   }, [variant]);
 
   return { play };

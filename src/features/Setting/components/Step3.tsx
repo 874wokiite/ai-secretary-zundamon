@@ -39,7 +39,7 @@ export const Step3 = ({ schedules, setIsVisible }: Step3Props) => {
               : "リマインダーのセットが完了したのだ!!"}
           </Message>
           <ZundamonImage
-            variant={isLoading ? "think" : "yatta"}
+            variant={isLoading ? "think" : "greet"}
             className="w-[340px]"
           />
         </div>

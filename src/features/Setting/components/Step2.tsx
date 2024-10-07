@@ -6,12 +6,21 @@ import { MdEditCalendar } from "react-icons/md";
 
 import { Button } from "@/components/Button";
 import { Message } from "@/components/Message";
-import { ZundamonImage } from "@/components/ZundamonImage";
-import { useGetMessage } from "@/features/Setting/hooks/useGetMessage";
+import {
+  ZundamonImage,
+  type ZundamonImageVariant,
+} from "@/components/ZundamonImage";
 import { useGetSchedules } from "@/features/Setting/hooks/useGetSchedules";
+import { useGetSummary } from "@/features/Setting/hooks/useGetSummary";
 import type { Step } from "@/features/Setting/types/Step";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Schedule } from "@/types/Schedule";
+
+const feelingMap: Record<"1" | "2" | "3", ZundamonImageVariant> = {
+  "1": "komari",
+  "2": "order",
+  "3": "yatta",
+};
 
 const ScheduleRow = ({ schedule }: { schedule: Schedule }) => {
   return (
@@ -33,7 +42,7 @@ type Step2Props = {
 
 export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
   const { schedules, refetch } = useGetSchedules();
-  const { message, isLoading } = useGetMessage(schedules);
+  const { summary, isLoading } = useGetSummary(schedules);
   const { play: playCheck } = useZundamonSound("check");
 
   useEffect(() => {
@@ -69,8 +78,10 @@ export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
         </div>
         <Button
           onClick={() => {
-            setSchedules(schedules);
-            setStep(3);
+            if (schedules) {
+              setSchedules(schedules);
+              setStep(3);
+            }
           }}
         >
           <MdWork className="size-[18px]" /> 業務開始！
@@ -79,10 +90,10 @@ export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
       <div className="relative h-full w-[340px]">
         <div className="absolute -bottom-[184px]">
           <Message>
-            {isLoading ? "今日の予定を取得してくるのだ..." : message}
+            {summary ? summary.comment : "今日の予定を取得してくるのだ..."}
           </Message>
           <ZundamonImage
-            variant={isLoading ? "think" : "order"}
+            variant={summary ? feelingMap[summary.feeling] : "think"}
             className="w-[340px]"
           />
         </div>

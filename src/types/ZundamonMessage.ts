@@ -1,4 +1,4 @@
-export type ZundaMessage = {
+export type ZundamonMessage = {
   action: "REMIND" | "OPEN";
   id?: string;
 };
