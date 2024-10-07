@@ -52,6 +52,9 @@ const handler: PlasmoMessaging.MessageHandler<Schedule[], string> = async (
   });
   const message = completion.choices[0].message.content;
 
+  // FIXME: デバッグ用にAIではなく固定のレスポンスを返す
+  // const message = "今日の予定はコレなのだ!!";
+
   // BSWから別の世界にレスポンスを返す
   messageResponse.send(message);
 };
