@@ -14,28 +14,35 @@ export const useSetAlarms = (schedules: Schedule[]) => {
     error: undefined,
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        if (schedules) {
-          await sendToBackground<Schedule[], void>({
-            name: "setAlarms",
-            body: schedules,
-          });
+  const fetch = async () => {
+    try {
+      if (schedules) {
+        setState({
+          isLoading: true,
+          error: undefined,
+        });
 
-          setState({
-            isLoading: false,
-            error: undefined,
-          });
-        }
-      } catch (error: any) {
+        await sendToBackground<Schedule[], void>({
+          name: "setAlarms",
+          body: schedules,
+        });
+
         setState({
           isLoading: false,
-          error: error,
+          error: undefined,
         });
       }
-    })();
+    } catch (error: any) {
+      setState({
+        isLoading: false,
+        error: error,
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetch();
   }, [schedules]);
 
-  return state;
+  return { ...state, refetch: fetch };
 };

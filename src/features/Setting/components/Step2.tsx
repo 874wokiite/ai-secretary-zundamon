@@ -7,12 +7,11 @@ import { MdEditCalendar } from "react-icons/md";
 import { Button } from "@/components/Button";
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
+import { useGetMessage } from "@/features/Setting/hooks/useGetMessage";
 import { useGetSchedules } from "@/features/Setting/hooks/useGetSchedules";
 import type { Step } from "@/features/Setting/types/Step";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Schedule } from "@/types/Schedule";
-
-import { useGetMessage } from "../hooks/useGetMessage";
 
 const ScheduleRow = ({ schedule }: { schedule: Schedule }) => {
   return (
@@ -33,13 +32,15 @@ type Step2Props = {
 };
 
 export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
-  const { schedules } = useGetSchedules();
+  const { schedules, refetch } = useGetSchedules();
   const { message, isLoading } = useGetMessage(schedules);
   const { play: playCheck } = useZundamonSound("check");
 
   useEffect(() => {
-    playCheck();
-  }, []);
+    if (!isLoading) {
+      playCheck();
+    }
+  }, [isLoading]);
 
   return (
     <div className="flex h-full w-full flex-row justify-between p-[24px]">
@@ -48,8 +49,9 @@ export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
           <div className="flex h-[48px] items-center justify-between border-b border-zunda-black bg-zunda-secondary-pale pl-[16px]">
             <div className="flex flex-row items-center gap-[12px]">
               <h2 className="text-zunda-body font-bold">今日の予定</h2>
-              <Button variant="secondary" size="small">
-                <MdAutorenew className="size-[14px]" /> 再取得
+              <Button variant="secondary" size="small" onClick={refetch}>
+                <MdAutorenew className="size-[14px]" />
+                再取得
               </Button>
             </div>
             <Button variant="text" size="small" asChild>

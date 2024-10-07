@@ -16,27 +16,35 @@ export const useGetSchedules = () => {
     error: undefined,
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const schedules = await sendToBackground<void, Schedule[]>({
-          name: "getSchedules",
-        });
+  const fetch = async () => {
+    try {
+      setState({
+        schedules: undefined,
+        isLoading: true,
+        error: undefined,
+      });
 
-        setState({
-          schedules: schedules,
-          isLoading: false,
-          error: undefined,
-        });
-      } catch (error: any) {
-        setState({
-          schedules: undefined,
-          isLoading: false,
-          error: error,
-        });
-      }
-    })();
+      const schedules = await sendToBackground<void, Schedule[]>({
+        name: "getSchedules",
+      });
+
+      setState({
+        schedules: schedules,
+        isLoading: false,
+        error: undefined,
+      });
+    } catch (error: any) {
+      setState({
+        schedules: undefined,
+        isLoading: false,
+        error: error,
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetch();
   }, []);
 
-  return state;
+  return { ...state, refetch: fetch };
 };

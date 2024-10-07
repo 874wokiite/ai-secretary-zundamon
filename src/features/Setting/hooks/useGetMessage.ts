@@ -16,30 +16,38 @@ export const useGetMessage = (schedules: Schedule[] | undefined) => {
     error: undefined,
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        if (schedules) {
-          const message = await sendToBackground<Schedule[], string>({
-            name: "getMessage",
-            body: schedules,
-          });
+  const fetch = async () => {
+    try {
+      setState({
+        message: undefined,
+        isLoading: true,
+        error: undefined,
+      });
 
-          setState({
-            message: message,
-            isLoading: false,
-            error: undefined,
-          });
-        }
-      } catch (error: any) {
+      if (schedules) {
+        const message = await sendToBackground<Schedule[], string>({
+          name: "getMessage",
+          body: schedules,
+        });
+
         setState({
-          message: undefined,
+          message: message,
           isLoading: false,
-          error: error,
+          error: undefined,
         });
       }
-    })();
+    } catch (error: any) {
+      setState({
+        message: undefined,
+        isLoading: false,
+        error: error,
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetch();
   }, [schedules]);
 
-  return state;
+  return { ...state, refetch: fetch };
 };
