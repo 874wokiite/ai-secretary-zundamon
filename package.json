@@ -60,7 +60,7 @@
     "web_accessible_resources": [
       {
         "resources": [
-          "assets/sounds/*.wav"
+          "assets/sounds/*/*.wav"
         ],
         "matches": [
           "<all_urls>"
