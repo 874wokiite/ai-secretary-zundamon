@@ -1,4 +1,5 @@
 import { Storage as ChromeStorage } from "@plasmohq/storage";
+import { animated, useTransition } from "@react-spring/web";
 import { useEffect, useState } from "react";
 
 import { Message } from "@/components/Message";
@@ -9,7 +10,21 @@ import type { ZundamonMessage } from "@/types/ZundamonMessage";
 
 export const Toast = () => {
   const [schedule, setSchedule] = useState<Schedule | undefined>(undefined);
+  const [isAnimating, setIsAnimating] = useState(false);
   const { play: playNotify } = useZundamonSound("notify");
+
+  // アニメーションの設定
+  const transitions = useTransition(schedule, {
+    from: { y: 400 },
+    enter: { y: 0 },
+    leave: { y: 400 },
+    config: { duration: 1000 },
+    onStart: () => setIsAnimating(true),
+    onRest: () => {
+      if (schedule) playNotify();
+      setIsAnimating(false);
+    },
+  });
 
   useEffect(() => {
     // BSWから"REMIND"アクションを受け取った時に、Chromeストレージからスケジュールを取得する
@@ -26,28 +41,41 @@ export const Toast = () => {
         sendResponse();
       },
     );
+    //
+    // FIXME: デバッグ用
+    // setSchedule({
+    //   id: "ほげ",
+    //   name: "とすとす超会議",
+    //   start: new Date(),
+    //   end: new Date(),
+    // });
   }, []);
 
   useEffect(() => {
     if (schedule) {
-      // 通知が来たとき用のずんだもんの音声を再生する
-      playNotify();
-
       // 通知されてから5秒後に消えるようにタイマーをセット
       let timerId = setTimeout(() => {
         setSchedule(undefined);
-      }, 5000);
+      }, 7500);
 
       return () => clearTimeout(timerId);
     }
   }, [schedule]);
 
-  return (
-    schedule && (
-      <div className="flex h-[640px] w-[340px] flex-col">
-        <Message>{`「${schedule.name}」がもうすぐ始まるのだ!!`}</Message>
-        <ZundamonImage variant="greet" className="w-[340px]" />
-      </div>
-    )
+  return transitions(
+    (style, schedule) =>
+      schedule && (
+        <animated.div className="relative h-[600px] w-[340px]" style={style}>
+          {!isAnimating && (
+            <Message className="absolute -top-[32px] left-1/2 -translate-x-1/2">
+              {`「${schedule.name}」がもうすぐ始まるのだ!!`}
+            </Message>
+          )}
+          <ZundamonImage
+            variant={isAnimating ? "default" : "greet"}
+            className="w-[340px]"
+          />
+        </animated.div>
+      ),
   );
 };

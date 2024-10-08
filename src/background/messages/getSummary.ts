@@ -78,7 +78,7 @@ const handler: PlasmoMessaging.MessageHandler<Schedule[], Summary> = async (
     throw new Error("Failed to generate Structured Output.");
   }
 
-  // FIXME: デバッグ用にAIではなく固定のレスポンスを返す
+  // FIXME: デバッグ用
   // const summary: Summary = {
   //   comment: "今日の予定はコレなのだ!!",
   //   feeling: "3",

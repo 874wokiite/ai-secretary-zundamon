@@ -27,7 +27,7 @@ export const Step3 = ({ schedules, setIsVisible }: Step3Props) => {
     <div className="flex h-full w-full flex-row justify-between p-[24px]">
       <div className="flex w-[392px] flex-col items-center justify-center gap-[40px]">
         <Button onClick={() => setIsVisible(false)}>
-          <MdOutlineWavingHand className="size-[18px]" />{" "}
+          <MdOutlineWavingHand className="size-[18px]" />
           今日もよろしくね！ずんだもん！
         </Button>
       </div>
