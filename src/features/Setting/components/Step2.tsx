@@ -30,7 +30,7 @@ const ScheduleRow = ({ schedule }: { schedule: Schedule }) => {
         <p>-</p>
         <p>{format(schedule.end, "H:mm")}</p>
       </div>
-      <div className="w-[full] text-zunda-body">{schedule.name}</div>
+      <div className="w-[280px] text-wrap text-zunda-body">{schedule.name}</div>
     </div>
   );
 };
@@ -69,7 +69,7 @@ export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
               </a>
             </Button>
           </div>
-          <div className="flex h-full w-full flex-col items-center gap-[24px] p-[16px]">
+          <div className="flex h-full w-full flex-col items-center gap-[24px] overflow-x-hidden overflow-y-scroll p-[16px]">
             {schedules &&
               schedules.map((schedule: Schedule) => (
                 <ScheduleRow key={schedule.id} schedule={schedule} />

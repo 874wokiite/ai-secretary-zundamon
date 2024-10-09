@@ -6,3 +6,8 @@ export const getOpenAIApiKey = async () => {
 
   return apiKey;
 };
+
+export const setOpenAIApiKey = async (apikey: string) => {
+  const storage = new ChromeStorage();
+  await storage.set("apiKey", apikey);
+};
