@@ -17,6 +17,7 @@ type Step3Props = {
 };
 
 export const Step3 = ({ schedules, setIsVisible }: Step3Props) => {
+  // FIXME: フレーズ関連の処理の方がはるかに時間がかかるため、isLoadingの名前被りを避けれるようにこのような書き方をしている
   useSetScheduleReminder(schedules);
 
   const { phrases } = useGetPhrases(schedules);
@@ -32,7 +33,13 @@ export const Step3 = ({ schedules, setIsVisible }: Step3Props) => {
   return (
     <div className="flex h-full w-full flex-row justify-between p-[24px]">
       <div className="flex w-[392px] flex-col items-center justify-center gap-[40px]">
-        <Button onClick={() => setIsVisible(false)}>
+        <Button
+          onClick={() => {
+            if (!isLoading) {
+              setIsVisible(false);
+            }
+          }}
+        >
           <MdOutlineWavingHand className="size-[18px]" />
           今日もよろしくね！ずんだもん！
         </Button>

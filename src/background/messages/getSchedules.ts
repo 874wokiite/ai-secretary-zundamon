@@ -48,7 +48,7 @@ const handler: PlasmoMessaging.MessageHandler<void, Schedule[]> = async (
   const items: any[] = data.items;
 
   // AIずんだもんで使用するスケジュールの型に変換
-  const events: Schedule[] = items.map((item) => ({
+  const schedules: Schedule[] = items.map((item) => ({
     id: item.id,
     name: item.summary,
     start: parseISO(item.start.dateTime),
@@ -56,7 +56,7 @@ const handler: PlasmoMessaging.MessageHandler<void, Schedule[]> = async (
   }));
 
   // BSWから別の世界にレスポンスを返す
-  messageResponse.send(events);
+  messageResponse.send(schedules);
 };
 
 export default handler;

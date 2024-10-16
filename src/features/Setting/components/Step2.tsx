@@ -78,7 +78,7 @@ export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
         </div>
         <Button
           onClick={() => {
-            if (schedules) {
+            if (schedules && !isLoading) {
               setSchedules(schedules);
               setStep(3);
             }
