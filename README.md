@@ -69,3 +69,32 @@ AIモデルにはOpenAIの`gpt-4o`を使用しており、チャット/コメン
 
 > [!NOTE]
 > 手動でビルドを行う場合は、Google Cloud PlatformからAPIのOauthクライアントを作成し、`package.json`のプロパティを適切に変更する必要があります。
+
+## 🛠️ Developers
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="http://www.yanoucrea.fr">
+        <img src="https://avatars0.githubusercontent.com/u/98846813?v=4%253Fs=100" width="100px;" alt=""/>
+        <br />
+        <sub><b>874wokiite</b></sub>
+      </a>
+      <br />
+      <span title="Design & Direction">🎨</span>
+      <span title="Code">💻</span>
+      <span title="Documentation">📖</span>
+    </td>
+    <td align="center">
+      <a href="http://www.yanoucrea.fr">
+        <img src="https://avatars0.githubusercontent.com/u/85057870?v=4%253Fs=100" width="100px;" alt=""/>
+        <br />
+        <sub><b>tosuri13</b></sub>
+      </a>
+      <br />
+      <span title="Architect">🤖</span>
+      <span title="Code">💻</span>
+      <span title="Documentation">📖</span>
+    </td>
+  </tr>
+</table>
