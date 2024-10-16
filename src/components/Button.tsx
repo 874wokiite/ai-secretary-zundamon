@@ -10,9 +10,9 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-zunda-primary text-zunda-black text-zunda-body border-zunda-black",
+          "bg-zunda-primary text-zunda-black text-zunda-body border-zunda-black shadow-[0_2px_0_0_black] transition-all ease-in-out hover:translate-y-[2px] hover:shadow-none",
         secondary:
-          "bg-zunda-white text-zunda-black text-zunda-caption border-zunda-black",
+          "bg-zunda-white text-zunda-black text-zunda-caption border-zunda-black shadow-[0_2px_0_0_black] transition-all ease-in-out hover:translate-y-[2px] hover:shadow-none",
         text: "text-zunda-primary text-zunda-caption border-none",
       },
       size: {
