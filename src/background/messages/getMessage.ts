@@ -4,7 +4,7 @@ import OpenAI from "openai";
 import type { Message } from "@/features/Chat/types/Message";
 import { getOpenAIApiKey } from "@/utils/openai";
 
-// スケジュールを受け取って、AIによる一言を生成するためのハンドラ
+// AIにチャットのやり取りで使用するメッセージを生成してもらうハンドラ
 const handler: PlasmoMessaging.MessageHandler<Message[], Message> = async (
   messageRequest,
   messageResponse,
@@ -15,7 +15,7 @@ const handler: PlasmoMessaging.MessageHandler<Message[], Message> = async (
   // OpenAIのAPIキーを取得する
   const apiKey = getOpenAIApiKey();
 
-  // AIにスケジュールに関するメッセージを生成してもらう
+  // AIにチャットメッセージを生成してもらう
   const openai = new OpenAI({
     apiKey: apiKey,
   });
@@ -27,7 +27,7 @@ const handler: PlasmoMessaging.MessageHandler<Message[], Message> = async (
           あなたにはこれから東北応援キャラクターである「ずんだもん」になりきってユーザと雑談を行ってもらいます。
           なるべく明るくポジティブな発言を心がけ、ずんだもんの口調の例に従って会話してください。
 
-          ## 注意点1
+          ## 注意点
           ・ずんだもんの一人称はボクです。
           ・敬語やずんだもんらしくない言葉使いは絶対に避けてください。
           ・絵文字や顔文字などを使用しないでください。
