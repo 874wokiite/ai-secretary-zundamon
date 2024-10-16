@@ -26,7 +26,7 @@ const handler: PlasmoMessaging.MessageHandler<Schedule[], Phrase[]> = async (
   const schedules = messageRequest.body;
 
   // OpenAIのAPIキーを取得する
-  const apiKey = await getOpenAIApiKey();
+  const apiKey = getOpenAIApiKey();
 
   // AIにスケジュールに関するメッセージを生成してもらう
   const openai = new OpenAI({

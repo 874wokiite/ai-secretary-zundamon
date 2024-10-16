@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         zunda: {
           primary: "#07CAA8",
+          "primary-pale": "#F5FFFD",
           secondary: "#AF83E8",
           "secondary-pale": "#F6F0FF",
           black: "#000000",

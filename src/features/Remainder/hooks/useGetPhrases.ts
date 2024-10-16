@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import type { Phrase } from "@/types/Phrase";
 import type { Schedule } from "@/types/Schedule";
 
-type UpdateSchedulesState = {
+type useGetPhraseState = {
   phrases: Phrase[] | undefined;
   isLoading: boolean;
   error: any | undefined;
 };
 
-export const useGetPhrases = (schedules: Schedule[]) => {
-  const [state, setState] = useState<UpdateSchedulesState>({
+export const useGetPhrases = (schedules: Schedule[] | undefined) => {
+  const [state, setState] = useState<useGetPhraseState>({
     phrases: undefined,
     isLoading: true,
     error: undefined,
@@ -25,16 +25,18 @@ export const useGetPhrases = (schedules: Schedule[]) => {
         error: undefined,
       });
 
-      const phrases = await sendToBackground<Schedule[], Phrase[]>({
-        name: "getPhrases",
-        body: schedules,
-      });
+      if (schedules) {
+        const phrases = await sendToBackground<Schedule[], Phrase[]>({
+          name: "getPhrases",
+          body: schedules,
+        });
 
-      setState({
-        phrases: phrases,
-        isLoading: false,
-        error: undefined,
-      });
+        setState({
+          phrases: phrases,
+          isLoading: false,
+          error: undefined,
+        });
+      }
     } catch (error: any) {
       setState({
         phrases: undefined,
@@ -46,7 +48,7 @@ export const useGetPhrases = (schedules: Schedule[]) => {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [schedules]);
 
   return { ...state, refetch: fetch };
 };

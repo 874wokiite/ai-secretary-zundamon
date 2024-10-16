@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
-import { MdOutlineWavingHand } from "react-icons/md";
+import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import { MdArrowUpward, MdOutlineWavingHand } from "react-icons/md";
 
 import { Button } from "@/components/Button";
+import { IconButton } from "@/components/IconButton";
 import { ZundamonImage } from "@/components/ZundamonImage";
+import { useGetMessage } from "@/features/Chat/hooks/useGetMessage";
+import type { Message } from "@/features/Chat/types/Message";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
 
 type ChatProps = {
@@ -10,23 +14,71 @@ type ChatProps = {
 };
 
 export const Chat = ({ setIsVisible }: ChatProps) => {
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const { message, isLoading } = useGetMessage(messages);
   const { play: playCheck } = useZundamonSound("talk");
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (input.trim()) {
+      setInput("");
+      setMessages((messages) => [
+        ...messages,
+        { role: "user", content: input.trim() },
+      ]);
+    }
+  };
 
   useEffect(() => {
     playCheck();
   }, []);
 
+  useEffect(() => {
+    if (message) {
+      setMessages((messages) => [...messages, message]);
+    }
+  }, [message]);
+
   return (
     <div className="flex h-full w-full flex-row justify-between p-[24px]">
       <div className="flex flex-col items-center gap-[40px]">
         <div className="flex h-full w-[392px] flex-col border border-zunda-black">
-          <div className="flex h-[48px] items-center justify-between border-b border-zunda-black bg-zunda-secondary-pale pl-[16px]">
+          <div className="flex h-[48px] items-center border-b border-zunda-black bg-zunda-secondary-pale pl-[16px]">
             <h2 className="text-zunda-body font-bold">
               ずんだもんとお話しよう
             </h2>
           </div>
-          <div className="flex h-full w-full flex-col items-center gap-[24px] overflow-x-hidden overflow-y-scroll p-[16px]">
-            Chat建設予定地
+          <div className="flex h-full w-full flex-col items-center justify-between gap-[8px] p-[16px]">
+            <div className="flex h-[320px] max-h-[320px] w-full flex-col gap-[24px] overflow-x-hidden overflow-y-scroll">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={clsx(
+                    "h-fit w-full whitespace-pre-wrap text-wrap p-[10px] text-zunda-body text-zunda-black",
+                    message.role === "user"
+                      ? "bg-zunda-primary-pale text-zunda-black"
+                      : "bg-zunda-secondary text-zunda-white",
+                  )}
+                >
+                  {message.content}
+                </div>
+              ))}
+            </div>
+            <form
+              className="flex h-[96px] w-full flex-row items-end gap-[10px] border border-zunda-gray bg-zunda-white p-[10px]"
+              onSubmit={handleSubmit}
+            >
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="ずんだもんに話しかけてみよう"
+                className="h-full w-full resize-none text-zunda-body text-zunda-black placeholder:text-zunda-gray focus:outline-none"
+              />
+              <IconButton type="submit">
+                <MdArrowUpward className="size-[18px]" />
+              </IconButton>
+            </form>
           </div>
         </div>
       </div>
@@ -40,7 +92,10 @@ export const Chat = ({ setIsVisible }: ChatProps) => {
           ずんだもんとのお話をやめる!!
         </Button>
         <div className="absolute -bottom-[184px]">
-          <ZundamonImage variant="default" className="w-[340px]" />
+          <ZundamonImage
+            variant={isLoading ? "think" : "default"}
+            className="w-[340px]"
+          />
         </div>
       </div>
     </div>
