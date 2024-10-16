@@ -1,3 +1,4 @@
+import { animated, easings, useSpring } from "@react-spring/web";
 import LogoImage from "data-base64:@/assets/images/logo.png";
 import React, { useEffect } from "react";
 import { MdCalendarToday, MdChat } from "react-icons/md";
@@ -14,6 +15,16 @@ type TitleProps = {
 
 export const Title = ({ setFeature }: TitleProps) => {
   const { play: playGreet } = useZundamonSound("greet");
+
+  // ロゴのアニメーション設定
+  const logoSpring = useSpring({
+    from: { y: 400, opacity: 1 },
+    to: { y: 0, opacity: 1 },
+    config: {
+      duration: 1200,
+      easing: easings.easeInOutCubic,
+    },
+  });
 
   useEffect(() => {
     playGreet();
@@ -38,12 +49,14 @@ export const Title = ({ setFeature }: TitleProps) => {
           </EntranceButton>
         </div>
       </div>
-      <div className="relative h-full w-[340px]">
-        <div className="absolute -bottom-[184px]">
-          <Message>おっはよ〜んなのだ！！！</Message>
-          <ZundamonImage variant="greet" className="w-[340px]" />
+      <animated.div style={logoSpring}>
+        <div className="relative h-full w-[340px]">
+          <div className="absolute -bottom-[184px]">
+            <Message>おっはよ〜んなのだ！！！</Message>
+            <ZundamonImage variant="greet" className="w-[340px]" />
+          </div>
         </div>
-      </div>
+      </animated.div>
     </div>
   );
 };
