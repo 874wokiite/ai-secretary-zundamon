@@ -74,7 +74,7 @@ export const Chat = ({ setIsVisible }: ChatProps) => {
                   </p>
                   <p className="whitespace-pre-wrap text-zunda-body text-zunda-gray">
                     ・今開いてるページを要約 <br />
-                    このページ翻訳して」「このページ要約して」っていうとずんだもんが頑張ってくれるよ！
+                    「このページ翻訳して」「このページ要約して」っていうとずんだもんが頑張ってくれるよ！
                   </p>
                 </div>
               )}
