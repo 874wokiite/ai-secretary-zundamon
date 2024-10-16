@@ -50,20 +50,34 @@ export const Chat = ({ setIsVisible }: ChatProps) => {
             </h2>
           </div>
           <div className="flex h-full w-full flex-col items-center justify-between gap-[8px] p-[16px]">
-            <div className="flex h-[320px] max-h-[320px] w-full flex-col gap-[24px] overflow-x-hidden overflow-y-scroll">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={clsx(
-                    "h-fit w-full whitespace-pre-wrap text-wrap p-[10px] text-zunda-body text-zunda-black",
-                    message.role === "user"
-                      ? "bg-zunda-primary-pale text-zunda-black"
-                      : "bg-zunda-secondary text-zunda-white",
-                  )}
-                >
-                  {message.content}
+            <div className="flex h-[304px] max-h-[304px] w-full flex-col gap-[24px] overflow-x-hidden overflow-y-scroll">
+              {messages.length !== 0 ? (
+                messages.map((message, index) => (
+                  <div
+                    key={index}
+                    className={clsx(
+                      "h-fit w-full whitespace-pre-wrap text-wrap p-[10px] text-zunda-body text-zunda-black",
+                      message.role === "user"
+                        ? "bg-zunda-primary-pale text-zunda-black"
+                        : "bg-zunda-secondary text-zunda-white",
+                    )}
+                  >
+                    {message.content}
+                  </div>
+                ))
+              ) : (
+                <div className="flex h-full w-full flex-col gap-[24px]">
+                  <p className="text-zunda-body text-zunda-gray">できること</p>
+                  <p className="text-zunda-body text-zunda-gray">
+                    ・ずんだもんと雑談 <br />
+                    楽しくお話しよう！
+                  </p>
+                  <p className="whitespace-pre-wrap text-zunda-body text-zunda-gray">
+                    ・今開いてるページを要約 <br />
+                    このページ翻訳して」「このページ要約して」っていうとずんだもんが頑張ってくれるよ！
+                  </p>
                 </div>
-              ))}
+              )}
             </div>
             <form
               className="flex h-[96px] w-full flex-row items-end gap-[10px] border border-zunda-gray bg-zunda-white p-[10px]"
@@ -72,7 +86,7 @@ export const Chat = ({ setIsVisible }: ChatProps) => {
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="ずんだもんに話しかけてみよう"
+                placeholder="ずんだもんに話しかけてみよう!"
                 className="h-full w-full resize-none text-zunda-body text-zunda-black placeholder:text-zunda-gray focus:outline-none"
               />
               <IconButton type="submit">
@@ -93,7 +107,7 @@ export const Chat = ({ setIsVisible }: ChatProps) => {
         </Button>
         <div className="absolute -bottom-[184px]">
           <ZundamonImage
-            variant={isLoading ? "think" : "default"}
+            variant={isLoading ? "think" : "order"}
             className="w-[340px]"
           />
         </div>
