@@ -1,8 +1,6 @@
 import { format } from "date-fns";
 import React, { useEffect } from "react";
-import { MdAutorenew } from "react-icons/md";
-import { MdWork } from "react-icons/md";
-import { MdEditCalendar } from "react-icons/md";
+import { MdAutorenew, MdEditCalendar, MdWork } from "react-icons/md";
 
 import { Button } from "@/components/Button";
 import { Message } from "@/components/Message";
@@ -10,9 +8,9 @@ import {
   ZundamonImage,
   type ZundamonImageVariant,
 } from "@/components/ZundamonImage";
-import { useGetSchedules } from "@/features/Setting/hooks/useGetSchedules";
-import { useGetSummary } from "@/features/Setting/hooks/useGetSummary";
-import type { Step } from "@/features/Setting/types/Step";
+import { useGetSchedules } from "@/features/Remainder/hooks/useGetSchedules";
+import { useGetSummary } from "@/features/Remainder/hooks/useGetSummary";
+import type { Step } from "@/features/Remainder/types/Step";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Schedule } from "@/types/Schedule";
 
@@ -35,12 +33,12 @@ const ScheduleRow = ({ schedule }: { schedule: Schedule }) => {
   );
 };
 
-type Step2Props = {
+type Step1Props = {
   setStep: React.Dispatch<React.SetStateAction<Step>>;
   setSchedules: React.Dispatch<React.SetStateAction<Schedule[]>>;
 };
 
-export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
+export const Step1 = ({ setStep, setSchedules }: Step1Props) => {
   const { schedules, refetch } = useGetSchedules();
   const { summary, isLoading } = useGetSummary(schedules);
   const { play: playCheck } = useZundamonSound("check");
@@ -80,7 +78,7 @@ export const Step2 = ({ setStep, setSchedules }: Step2Props) => {
           onClick={() => {
             if (schedules && !isLoading) {
               setSchedules(schedules);
-              setStep(3);
+              setStep(2);
             }
           }}
         >

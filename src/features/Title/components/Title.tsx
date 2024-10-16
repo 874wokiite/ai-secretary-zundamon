@@ -5,14 +5,14 @@ import { MdLightMode } from "react-icons/md";
 import { Button } from "@/components/Button";
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
-import type { Step } from "@/features/Setting/types/Step";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
+import type { Feature } from "@/types/Feature";
 
-type Step1Props = {
-  setStep: React.Dispatch<React.SetStateAction<Step>>;
+type TitleProps = {
+  setFeature: React.Dispatch<React.SetStateAction<Feature>>;
 };
 
-export const Step1 = ({ setStep }: Step1Props) => {
+export const Title = ({ setFeature }: TitleProps) => {
   const { play: playGreet } = useZundamonSound("greet");
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const Step1 = ({ setStep }: Step1Props) => {
           src={LogoImage}
           alt="ロゴ画像"
         />
-        <Button onClick={() => setStep(2)}>
+        <Button onClick={() => setFeature("SETTING")}>
           <MdLightMode className="size-[18px]" /> おはよう！
         </Button>
       </div>

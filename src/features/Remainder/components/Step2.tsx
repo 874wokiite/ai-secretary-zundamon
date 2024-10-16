@@ -4,19 +4,18 @@ import { MdOutlineWavingHand } from "react-icons/md";
 import { Button } from "@/components/Button";
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
-import { useGetPhrases } from "@/features/Setting/hooks/useGetPhrases";
-import { useSetScheduleReminder } from "@/features/Setting/hooks/useSetScheduleReminder";
+import { useGetPhrases } from "@/features/Remainder/hooks/useGetPhrases";
+import { useSetPhraseReminder } from "@/features/Remainder/hooks/useSetPhraseReminder";
+import { useSetScheduleReminder } from "@/features/Remainder/hooks/useSetScheduleReminder";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Schedule } from "@/types/Schedule";
 
-import { useSetPhraseReminder } from "../hooks/useSetPhraseReminder";
-
-type Step3Props = {
+type Step2Props = {
   schedules: Schedule[];
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const Step3 = ({ schedules, setIsVisible }: Step3Props) => {
+export const Step2 = ({ schedules, setIsVisible }: Step2Props) => {
   // FIXME: フレーズ関連の処理の方がはるかに時間がかかるため、isLoadingの名前被りを避けれるようにこのような書き方をしている
   useSetScheduleReminder(schedules);
 
