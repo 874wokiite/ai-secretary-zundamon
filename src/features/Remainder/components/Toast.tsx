@@ -1,5 +1,6 @@
 import { Storage as ChromeStorage } from "@plasmohq/storage";
 import { animated, useTransition } from "@react-spring/web";
+import { easings } from "@react-spring/web";
 import { useEffect, useState } from "react";
 
 import { Message } from "@/components/Message";
@@ -23,7 +24,10 @@ export const Toast = () => {
     from: { y: 400 },
     enter: { y: 0 },
     leave: { y: 400 },
-    config: { duration: 1000 },
+    config: {
+      duration: 1200,
+      easing: easings.easeInOutCubic,
+    },
     onStart: () => setIsAnimating(true),
     onRest: () => {
       if (message && playSound) {
@@ -64,10 +68,10 @@ export const Toast = () => {
 
   useEffect(() => {
     if (message) {
-      // 通知されてから5秒後に消えるようにタイマーをセット
+      // 通知されてから10秒後に消えるようにタイマーをセット
       let timerId = setTimeout(() => {
         setMessage(undefined);
-      }, 7500);
+      }, 10000);
 
       return () => clearTimeout(timerId);
     }
