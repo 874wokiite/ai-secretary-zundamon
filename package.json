@@ -14,7 +14,7 @@
     "@radix-ui/react-aspect-ratio": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@react-spring/web": "^9.7.5",
-    "date-fns": "4.0.0-beta.1",
+    "date-fns": "3.1.0",
     "openai": "^4.67.1",
     "plasmo": "^0.89.3",
     "react": "18.2.0",

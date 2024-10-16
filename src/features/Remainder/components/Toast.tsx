@@ -5,23 +5,24 @@ import { useEffect, useState } from "react";
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
-import type { Schedule, ScheduleMap } from "@/types/Schedule";
+import type { PhraseMap } from "@/types/Phrase";
+import type { ScheduleMap } from "@/types/Schedule";
 import type { ZundamonMessage } from "@/types/ZundamonMessage";
 
 export const Toast = () => {
-  const [schedule, setSchedule] = useState<Schedule | undefined>(undefined);
+  const [message, setMessage] = useState<string | undefined>(undefined);
   const [isAnimating, setIsAnimating] = useState(false);
   const { play: playNotify } = useZundamonSound("notify");
 
   // アニメーションの設定
-  const transitions = useTransition(schedule, {
+  const transitions = useTransition(message, {
     from: { y: 400 },
     enter: { y: 0 },
     leave: { y: 400 },
     config: { duration: 1000 },
     onStart: () => setIsAnimating(true),
     onRest: () => {
-      if (schedule) playNotify();
+      if (message) playNotify();
       setIsAnimating(false);
     },
   });
@@ -30,45 +31,51 @@ export const Toast = () => {
     // BSWから"REMIND"アクションを受け取った時に、Chromeストレージからスケジュールを取得する
     chrome.runtime.onMessage.addListener(
       (message: ZundamonMessage, _, sendResponse) => {
-        if (message.action === "REMIND") {
+        if (message.action === "SCHEDULE_REMIND") {
           const storage = new ChromeStorage();
+
           void storage.get<ScheduleMap>("scheduleMap").then((scheduleMap) => {
             if (scheduleMap && message.id) {
-              setSchedule(scheduleMap[message.id]);
+              const schedule = scheduleMap[message.id];
+              setMessage(`「${schedule.name}」がもうすぐ始まるのだ!!`);
             }
           });
         }
+
+        if (message.action === "PHRASE_REMIND") {
+          const storage = new ChromeStorage();
+
+          void storage.get<PhraseMap>("phraseMap").then((phraseMap) => {
+            if (phraseMap && message.id) {
+              const phrase = phraseMap[message.id];
+              setMessage(phrase.comment);
+            }
+          });
+        }
+
         sendResponse();
       },
     );
-    //
-    // FIXME: デバッグ用
-    // setSchedule({
-    //   id: "ほげ",
-    //   name: "とすとす超会議",
-    //   start: new Date(),
-    //   end: new Date(),
-    // });
   }, []);
 
   useEffect(() => {
-    if (schedule) {
+    if (message) {
       // 通知されてから5秒後に消えるようにタイマーをセット
       let timerId = setTimeout(() => {
-        setSchedule(undefined);
+        setMessage(undefined);
       }, 7500);
 
       return () => clearTimeout(timerId);
     }
-  }, [schedule]);
+  }, [message]);
 
   return transitions(
-    (style, schedule) =>
-      schedule && (
+    (style, message) =>
+      message && (
         <animated.div className="relative h-[600px] w-[340px]" style={style}>
           {!isAnimating && (
             <Message className="absolute -top-[32px] left-1/2 -translate-x-1/2">
-              {`「${schedule.name}」がもうすぐ始まるのだ!!`}
+              {message}
             </Message>
           )}
           <ZundamonImage

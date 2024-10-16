@@ -1,10 +1,15 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging";
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
+import { z } from "zod";
 
 import type { Schedule } from "@/types/Schedule";
-import { type Summary, SummaryScheme } from "@/types/Summary";
+import { type Summary, summaryScheme } from "@/types/Summary";
 import { getOpenAIApiKey } from "@/utils/openai";
+
+const responseSchene = z.object({
+  summary: summaryScheme,
+});
 
 // スケジュールを受け取って、AIが生成したメッセージを返すハンドラ
 const handler: PlasmoMessaging.MessageHandler<Schedule[], Summary> = async (
@@ -43,7 +48,7 @@ const handler: PlasmoMessaging.MessageHandler<Schedule[], Summary> = async (
           ・〜なのだ!!
           ・〜のだ?
 
-          ## 生成するJSONの例
+          ## 生成するJSONプロパティの例
           - フィーリングが"1"のスケジュールの例
           {
             "comment": "今日は一日中会議が入ってるのだ!!大変だけど気を引き締めて頑張ってほしいのだ!!",
@@ -68,24 +73,26 @@ const handler: PlasmoMessaging.MessageHandler<Schedule[], Summary> = async (
         content: JSON.stringify(schedules),
       },
     ],
-    response_format: zodResponseFormat(SummaryScheme, "summary"),
+    response_format: zodResponseFormat(responseSchene, "data"),
   });
 
-  const summary = completion.choices[0].message.parsed;
+  const response = completion.choices[0].message.parsed;
 
   // Structured Outputの生成に失敗した場合はエラーを返す
-  if (!summary) {
+  if (!response) {
     throw new Error("Failed to generate Structured Output.");
   }
 
   // FIXME: デバッグ用
-  // const summary: Summary = {
-  //   comment: "今日の予定はコレなのだ!!",
-  //   feeling: "3",
+  // const response: { summary: Summary } = {
+  //   summary: {
+  //     comment: "今日の予定はコレなのだ!!",
+  //     feeling: "3",
+  //   },
   // };
 
   // BSWから別の世界にレスポンスを返す
-  messageResponse.send(summary);
+  messageResponse.send(response["summary"]);
 };
 
 export default handler;

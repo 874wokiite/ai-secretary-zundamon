@@ -1,30 +1,30 @@
 import { sendToBackground } from "@plasmohq/messaging";
 import { useEffect, useState } from "react";
 
-import type { Schedule } from "@/types/Schedule";
+import type { Phrase } from "@/types/Phrase";
 
-type SetAlarmsState = {
+type SetPhraseReminderState = {
   isLoading: boolean;
   error: any | undefined;
 };
 
-export const useSetAlarms = (schedules: Schedule[]) => {
-  const [state, setState] = useState<SetAlarmsState>({
+export const useSetPhraseReminder = (phrases: Phrase[] | undefined) => {
+  const [state, setState] = useState<SetPhraseReminderState>({
     isLoading: true,
     error: undefined,
   });
 
   const fetch = async () => {
     try {
-      if (schedules) {
+      if (phrases) {
         setState({
           isLoading: true,
           error: undefined,
         });
 
-        await sendToBackground<Schedule[], void>({
-          name: "setAlarms",
-          body: schedules,
+        await sendToBackground<Phrase[], void>({
+          name: "setPhraseReminder",
+          body: phrases,
         });
 
         setState({
@@ -42,7 +42,7 @@ export const useSetAlarms = (schedules: Schedule[]) => {
 
   useEffect(() => {
     fetch();
-  }, [schedules]);
+  }, [phrases]);
 
   return { ...state, refetch: fetch };
 };

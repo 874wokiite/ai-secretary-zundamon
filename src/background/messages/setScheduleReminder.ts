@@ -12,12 +12,12 @@ const handler: PlasmoMessaging.MessageHandler<Schedule[], void> = async (
   // リクエストからスケジュールを取り出す
   const schedules = messageRequest.body ?? [];
 
-  // 以前に登録されたChromeのアラームを削除する
+  // FIXME: 以前に登録されたChromeのアラームを削除する(ここに書くのは微妙)
   chrome.alarms.clearAll();
 
   schedules.forEach((schedule) => {
-    // スケジュールのIDをアラームの名前として扱う(アラーム名から対象のスケジュールを逆引きするときに使用する)
-    const alarmName = schedule.id;
+    // PrefixとIDの組み合わせをアラームの名前として扱う(アラーム名から対象のスケジュールを逆引きするときに使用する)
+    const alarmName = "SCHEDULE" + "-" + schedule.id;
 
     // 実際の予定が始まる3分前に通知するよう差分から引いておく
     const timeDifference = differenceInMinutes(schedule.start, new Date()) - 3;
@@ -31,8 +31,10 @@ const handler: PlasmoMessaging.MessageHandler<Schedule[], void> = async (
   });
 
   // IDからスケジュールを逆引きするためのMapを作成する
-  const scheduleMap: ScheduleMap = schedules.reduce((map, event) => {
-    map[event.id] = event;
+  const scheduleMap: ScheduleMap = schedules.reduce((map, schedule) => {
+    const alarmName = "SCHEDULE" + "-" + schedule.id;
+    map[alarmName] = schedule;
+
     return map;
   }, {});
 

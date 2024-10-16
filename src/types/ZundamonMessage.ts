@@ -1,4 +1,4 @@
 export type ZundamonMessage = {
-  action: "REMIND" | "OPEN";
+  action: "SCHEDULE_REMIND" | "PHRASE_REMIND" | "OPEN";
   id?: string;
 };

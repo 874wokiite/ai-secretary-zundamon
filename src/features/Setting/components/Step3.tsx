@@ -4,9 +4,12 @@ import { MdOutlineWavingHand } from "react-icons/md";
 import { Button } from "@/components/Button";
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
-import { useSetAlarms } from "@/features/Setting/hooks/useSetAlarms";
+import { useGetPhrases } from "@/features/Setting/hooks/useGetPhrases";
+import { useSetScheduleReminder } from "@/features/Setting/hooks/useSetScheduleReminder";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Schedule } from "@/types/Schedule";
+
+import { useSetPhraseReminder } from "../hooks/useSetPhraseReminder";
 
 type Step3Props = {
   schedules: Schedule[];
@@ -14,7 +17,10 @@ type Step3Props = {
 };
 
 export const Step3 = ({ schedules, setIsVisible }: Step3Props) => {
-  const { isLoading } = useSetAlarms(schedules);
+  useSetScheduleReminder(schedules);
+
+  const { phrases } = useGetPhrases(schedules);
+  const { isLoading } = useSetPhraseReminder(phrases);
   const { play: playCheer } = useZundamonSound("cheer");
 
   useEffect(() => {

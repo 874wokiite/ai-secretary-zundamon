@@ -14,15 +14,29 @@ chrome.action.onClicked.addListener((tab) => {
 
 // Chromeのアラームが発火した時の処理
 chrome.alarms.onAlarm.addListener((alarm) => {
-  const message: ZundamonMessage = {
-    action: "REMIND",
-    id: alarm.name,
+  const getMessage = (alarmName: string): ZundamonMessage => {
+    const prefix = alarmName.split("-")[0];
+
+    switch (prefix) {
+      case "PHRASE":
+        return {
+          action: "PHRASE_REMIND",
+          id: alarm.name,
+        };
+      case "SCHEDULE":
+        return {
+          action: "SCHEDULE_REMIND",
+          id: alarm.name,
+        };
+      default:
+        throw new Error("An unsupported prefix was entered.");
+    }
   };
 
   // アクティブなタブを検索して、メッセージを送信する
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (tabs[0].id) {
-      chrome.tabs.sendMessage(tabs[0].id, message);
+      chrome.tabs.sendMessage(tabs[0].id, getMessage(alarm.name));
     }
   });
 });
