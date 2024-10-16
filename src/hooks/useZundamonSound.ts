@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useRef } from "react";
 
-type ZundamonSoundVariant = "check" | "cheer" | "greet" | "notify" | "otukare";
+type ZundamonSoundVariant =
+  | "check"
+  | "cheer"
+  | "greet"
+  | "notify"
+  | "otukare"
+  | "talk";
 
 const soundMap: Record<ZundamonSoundVariant, string> = {
   check: "assets/sounds/zundamon/check.wav",
@@ -8,6 +14,7 @@ const soundMap: Record<ZundamonSoundVariant, string> = {
   greet: "assets/sounds/zundamon/greet.wav",
   notify: "assets/sounds/zundamon/notify.wav",
   otukare: "assets/sounds/zundamon/otukare.wav",
+  talk: "assets/sounds/zundamon/talk.wav",
 };
 
 export const useZundamonSound = (variant: ZundamonSoundVariant) => {

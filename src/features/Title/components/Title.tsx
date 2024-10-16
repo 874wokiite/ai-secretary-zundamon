@@ -1,8 +1,7 @@
 import LogoImage from "data-base64:@/assets/images/logo.png";
 import React, { useEffect } from "react";
-import { MdLightMode } from "react-icons/md";
+import { MdCalendarToday, MdChat } from "react-icons/md";
 
-import { Button } from "@/components/Button";
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
@@ -27,9 +26,21 @@ export const Title = ({ setFeature }: TitleProps) => {
           src={LogoImage}
           alt="ロゴ画像"
         />
-        <Button onClick={() => setFeature("SETTING")}>
-          <MdLightMode className="size-[18px]" /> おはよう！
-        </Button>
+        {/* FIXME: でっかいボタンをcompoenents以下にコンポーネントとして分離したい */}
+        <div className="flex flex-row gap-[16px]">
+          <button
+            onClick={() => setFeature("SETTING")}
+            className="border border-zunda-gray"
+          >
+            ずんだもんにリマインドしてもらう
+          </button>
+          <button
+            onClick={() => setFeature("CHAT")}
+            className="border border-zunda-gray"
+          >
+            ずんだもんとお話しする
+          </button>
+        </div>
       </div>
       <div className="relative h-full w-[340px]">
         <div className="absolute -bottom-[184px]">
