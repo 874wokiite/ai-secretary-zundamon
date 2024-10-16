@@ -82,7 +82,7 @@ export const Toast = () => {
       message && (
         <animated.div className="relative h-[600px] w-[340px]" style={style}>
           {!isAnimating && (
-            <Message className="absolute -top-[32px] left-1/2 -translate-x-1/2">
+            <Message className="absolute -top-[32px] left-1/2 -translate-x-1/2 -translate-y-1/2">
               {message}
             </Message>
           )}
