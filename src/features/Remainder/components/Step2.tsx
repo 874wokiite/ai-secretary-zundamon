@@ -33,6 +33,7 @@ export const Step2 = ({ schedules, setIsVisible }: Step2Props) => {
     <div className="flex h-full w-full flex-row justify-between p-[24px]">
       <div className="flex w-[392px] flex-col items-center justify-center gap-[40px]">
         <Button
+          variant="secondary"
           onClick={() => {
             if (!isLoading) {
               setIsVisible(false);
