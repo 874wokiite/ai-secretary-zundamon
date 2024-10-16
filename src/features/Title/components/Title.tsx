@@ -2,9 +2,9 @@ import LogoImage from "data-base64:@/assets/images/logo.png";
 import React, { useEffect } from "react";
 import { MdCalendarToday, MdChat } from "react-icons/md";
 
-import { EntranceButton } from "@/components/EntranceButton";
 import { Message } from "@/components/Message";
 import { ZundamonImage } from "@/components/ZundamonImage";
+import { EntranceButton } from "@/features/Title/components/EntranceButton";
 import { useZundamonSound } from "@/hooks/useZundamonSound";
 import type { Feature } from "@/types/Feature";
 
