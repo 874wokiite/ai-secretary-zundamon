@@ -1,13 +1,5 @@
-import { Storage as ChromeStorage } from "@plasmohq/storage";
-
-export const getOpenAIApiKey = async () => {
-  const storage = new ChromeStorage();
-  const apiKey = await storage.get<string>("apiKey");
+export const getOpenAIApiKey = () => {
+  const apiKey = process.env.PLASMO_PUBLIC_OPENAI_API_KEY;
 
   return apiKey;
-};
-
-export const setOpenAIApiKey = async (apikey: string) => {
-  const storage = new ChromeStorage();
-  await storage.set("apiKey", apikey);
 };
