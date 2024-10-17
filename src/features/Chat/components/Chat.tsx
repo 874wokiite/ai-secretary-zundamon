@@ -87,7 +87,7 @@ export const Chat = ({ setIsVisible }: ChatProps) => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="ずんだもんに話しかけてみよう!"
-                className="h-full w-full resize-none text-zunda-body text-zunda-black placeholder:text-zunda-gray focus:outline-none"
+                className="h-full w-full resize-none bg-zunda-white text-zunda-body text-zunda-black placeholder:text-zunda-gray focus:outline-none"
               />
               <IconButton type="submit">
                 <MdArrowUpward className="size-[18px]" />

@@ -28,7 +28,9 @@ const ScheduleRow = ({ schedule }: { schedule: Schedule }) => {
         <p>-</p>
         <p>{format(schedule.end, "H:mm")}</p>
       </div>
-      <div className="w-[280px] text-wrap text-zunda-body">{schedule.name}</div>
+      <div className="w-[280px] text-wrap text-zunda-body text-zunda-black">
+        {schedule.name}
+      </div>
     </div>
   );
 };
