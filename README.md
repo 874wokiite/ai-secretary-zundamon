@@ -26,6 +26,12 @@
   <img src="documents/images/remainder.png" width="400px">
 </div>
 
+その日の予定の忙しさ具合でずんだもんのリアクションが変わります!!
+
+<div align="center">
+  <img src="documents/images/change-emotion.png.png" width="1000px">
+</div>
+
 ### ⭐️ ずんだもんとお喋りできる!!
 
 チャット機能を使用して、ずんだもんと雑談することができます!!
