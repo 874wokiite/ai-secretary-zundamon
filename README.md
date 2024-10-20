@@ -25,6 +25,7 @@
 <div align="center">
   <img src="documents/images/remainder.png" width="400px">
 </div>
+</br>
 
 その日の予定の忙しさ具合でずんだもんのリアクションが変わります!!
 
